@@ -28,7 +28,7 @@ class Nodes {
         position: this.position,
         style: {
           background: "#011627",
-          fontSize: ".8rem",
+          fontSize: ".8rem", 
           textAlign: "left",
           color: "teal",
           border: "1px solid #5C4599",
