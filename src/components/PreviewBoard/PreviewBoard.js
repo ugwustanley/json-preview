@@ -97,7 +97,9 @@ const LayoutFlow = () => {
   
 
   return (
-    <div style={{ width: "100vw", height: "100vh" }} className="layoutflow">
+    <div
+     style={{ width: "100%", height: "calc(100% - 30px)" }}
+     className="layoutflow">
       <div style={{ width: "100%", height: "100%" }}>
         <ReactFlowProvider>
           <ReactFlow

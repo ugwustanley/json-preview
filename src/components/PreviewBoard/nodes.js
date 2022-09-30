@@ -43,7 +43,7 @@ class Nodes {
     if (typeof input === "object" && !Array.isArray(input)) {
       Object.keys(input).map((key, index) => {
         if (typeof input[key] === "object" || Array.isArray(input[key])) {
-          const id = `${Number(parentID + 1)}${index + 1} ${
+          const id = `${parentID + 1}${index + 1} ${
             Math.random() * 10000
           }`;
 
@@ -102,7 +102,7 @@ class Nodes {
 
           this.getNodes(input[key], id, key);
         } else {
-          const id = `${Number(parentID + 1)}${index + 1} ${
+          const id = `${parentID + 1}${index + 1} ${
             Math.random() * 10000
           }`;
 
@@ -147,7 +147,7 @@ class Nodes {
             style: {
               background: "#011627",
               fontSize: ".8rem",
-              fontFamily: "font-family: 'Noto Sans Mono', monospace;",
+              fontFamily: " 'Noto Sans Mono', monospace",
               textAlign: "left",
               color: "teal",
               border: "1px solid #5C4599",
@@ -170,7 +170,7 @@ class Nodes {
     if (Array.isArray(input)) {
       input.map((item, index) => {
         if (typeof item === "object" || Array.isArray(item)) {
-          const id = `${Number(parentID + 1)}${index + 1} ${
+          const id = `${parentID + 1}${index + 1} ${
             Math.random() * 10000
           }`;
 
@@ -190,7 +190,7 @@ class Nodes {
 
           this.getNodes(item, parentID);
         } else {
-          const id = `${Number(parentID + 1)}${index + 1} ${
+          const id = `${parentID + 1}${index + 1} ${
             Math.random() * 10000
           }`;
 
@@ -233,7 +233,7 @@ class Nodes {
             style: {
               background: "#011627",
               fontSize: ".8rem",
-              fontFamily: "font-family: 'Noto Sans Mono', monospace;",
+              fontFamily: "'Noto Sans Mono', monospace",
               textAlign: "left",
               color: "teal",
               border: "1px solid #5C4599",
@@ -280,10 +280,8 @@ const objectValue = {
 };
 
 
-console.log(typeof json);
-//const newObj = JSON.parse(json)
 
-//console.log(newObj, typeof newObj)
+
 
 const node1 = new Nodes(objectValue);
 
