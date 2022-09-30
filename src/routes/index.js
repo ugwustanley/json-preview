@@ -15,9 +15,7 @@ const index = () => {
       <Route
         path="/"
         element={
-          <Layout>
-            <View />
-          </Layout>
+          <Layout />
         }
       />
     </Routes>

@@ -7,7 +7,7 @@ import CodeEditor from "../CodeEditor/CodeEditor";
 //stylesheet
 import styles from "./View.module.scss";
 
-const View = () => {
+const View = ({ layout, code, setCode }) => {
   const [activeTab, setActiveTab] = useState("preview-board");
   return (
     <div className={styles.view}>
@@ -23,7 +23,7 @@ const View = () => {
           Code Editor
         </div>
         <div
-         className={
+          className={
             activeTab == "preview-board"
               ? `${styles.view__tabControl} ${styles.view__tabControl__active}`
               : `${styles.view__tabControl}`
@@ -33,7 +33,11 @@ const View = () => {
           Preview Board
         </div>
       </div>
-      {activeTab === "code-editor" ? <CodeEditor /> : <PreviewBoard />}
+      {activeTab === "code-editor" ? (
+        <CodeEditor setCode={setCode} code={code} />
+      ) : (
+        <PreviewBoard code={code} layout={layout} />
+      )}
     </div>
   );
 };

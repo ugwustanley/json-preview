@@ -1,0 +1,29 @@
+.sidebar{
+    background: #011627;
+    border-right: 1px solid #122d42cb;
+    width: 60px;
+    height: calc(100vh - 40px);
+    color: #fff;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+   align-items: center;
+   flex-direction: column;
+    &__top{
+
+    }
+    &__bottom{
+      width: fit-content;
+      height: fit-content;
+      display: flex;
+      align-self: baseline;
+      justify-content: center;
+      flex-direction: column;
+      margin:0 auto;
+      margin-bottom: 2rem;
+      
+      & *{
+        margin-top: 0.4rem;
+      }
+    }
+}

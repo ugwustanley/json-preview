@@ -276,16 +276,12 @@ const objectValue = {
     //     passed: false
     // }
   },
-  keywords: ["Preview JSON/Object",  "Visualize JSON/Object",  "View JSON file"],
+  //keywords: ["Preview JSON/Object",  "Visualize JSON/Object",  "View JSON file"],
 };
 
 
+export default Nodes;
 
 
-
-const node1 = new Nodes(objectValue);
-
-export const [newNodes, newEdges] = node1.getNodes();
-console.log(newNodes, newEdges);
 
 //export default Nodes;
