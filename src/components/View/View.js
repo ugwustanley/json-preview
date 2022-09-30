@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
+import { WarningCircle } from "phosphor-react";
 
 //components
 import PreviewBoard from "../PreviewBoard/PreviewBoard";
@@ -9,6 +10,22 @@ import styles from "./View.module.scss";
 
 const View = ({ layout, code, setCode }) => {
   const [activeTab, setActiveTab] = useState("preview-board");
+  const [isJson , setIsJson] = useState(false)
+
+  const isJSONString = (str) => {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    console.log("called")
+    return true;
+  };
+
+  useEffect(() => {
+    setIsJson(isJSONString(code))
+  }, [code])
+  
   return (
     <div className={styles.view}>
       <div className={styles.view__tabControls}>
@@ -20,7 +37,7 @@ const View = ({ layout, code, setCode }) => {
           }
           onClick={() => setActiveTab("code-editor")}
         >
-          Code Editor
+          Code Editor {isJson ? null :  <span><WarningCircle size={14} weight="bold" color={'tomato'} /></span>}
         </div>
         <div
           className={
@@ -28,7 +45,7 @@ const View = ({ layout, code, setCode }) => {
               ? `${styles.view__tabControl} ${styles.view__tabControl__active}`
               : `${styles.view__tabControl}`
           }
-          onClick={() => setActiveTab("preview-board")}
+          onClick={() => isJson && setActiveTab("preview-board")}
         >
           Preview Board
         </div>
