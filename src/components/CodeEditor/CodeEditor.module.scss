@@ -1,7 +1,29 @@
-.codeEditor{
-    width: 100%;
-    height: calc(100vh - 70px);
-    background: #011627;
-    color: #fff;
-    overflow-y: auto;
+.codeEditor {
+  width: 100%;
+  height: calc(100vh - 70px);
+  background: #011627;
+  color: #fff;
+  overflow-y: auto;
+
+  ::-webkit-scrollbar-track {
+    border: 0px solid black;
+    background-color: transparent;
+    //background-color: #F5F5F5;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+    @media (max-width: 480px) {
+      width: 5px;
+      height: 5px;
+    }
+    // margin-right:10rem;
+    //	background-color: #F5F5F5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 }

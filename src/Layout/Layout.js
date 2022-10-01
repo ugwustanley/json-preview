@@ -11,9 +11,32 @@ const Layout = ({children}) => {
  {
     "name": "json-preview",
     "version": "0.1.0",
-    "private": true
-    
-  }`)
+    "private": true,
+  
+    "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "test": "react-scripts test",
+      "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+      "extends": [
+        "react-app",
+        "react-app/jest"
+      ]
+    },
+    "browserslist": {
+        
+      "production": [
+        ">0.2%",
+        "not dead",
+        "not op_mini all"
+      ]
+     
+    }
+  }
+  
+  `)
     
   return (
     <div className={styles.layout}>

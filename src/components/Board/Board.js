@@ -1,68 +1,163 @@
-// import React from 'react'
-// import styles from './Board.module.scss'
-
-// const Board = () => {
-//   return (
-//     <div>Board</div>
-//   )
-// }
-
-// export default Board
-
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from "react";
 import ReactFlow, {
   addEdge,
-  MiniMap,
-  Controls,
-  Background,
+  ConnectionLineType,
   useNodesState,
   useEdgesState,
-} from 'reactflow';
-import 'reactflow/dist/style.css';
+  Controls,
+  Background,
+  ReactFlowProvider,
+} from "react-flow-renderer";
+import dagre from "dagre";
 
-import { nodes as initialNodes, edges as initialEdges } from './initials';
+import Nodes from "./initials";
 
-const onInit = (reactFlowInstance) => console.log('flow loaded:', reactFlowInstance);
+import "./index.css";
 
-const OverviewFlow = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
+const LayoutFlow = ({ layout, code }) => {
+
+    const objectValue = {
+        "squadName": "Super hero squad",
+        "homeTown": "Metro City",
+        "formed": 2016,
+        "secretBase": "Super tower",
+        "active": true,
+        "members": [
+          {
+            "name": "Molecule Man",
+            "age": 29,
+            "secretIdentity": "Dan Jukes",
+            "powers": [
+              "Radiation resistance",
+              "Turning tiny",
+              "Radiation blast"
+            ]
+          },
+          {
+            "name": "Madame Uppercut",
+            "age": 39,
+            "secretIdentity": "Jane Wilson",
+            "powers": [
+              "Million tonne punch",
+              "Damage resistance",
+              "Superhuman reflexes"
+            ]
+          },
+          {
+            "name": "Eternal Flame",
+            "age": 1000000,
+            "secretIdentity": "Unknown",
+            "powers": [
+              "Immortality",
+              "Heat Immunity",
+              "Inferno",
+              "Teleportation",
+              "Interdimensional travel"
+            ]
+          }
+        ]
+      }
+
+  const nodeInstance = new Nodes(objectValue);
+
+  const [newNodes, newEdges] = nodeInstance.getNodes();
+
+  const dagreGraph = new dagre.graphlib.Graph();
+  dagreGraph.setDefaultEdgeLabel(() => ({}));
+
+  const nodeWidth = 272;
+  const nodeHeight = 76;
+
+  const getLayoutedElements = (nodes, edges, direction = "LR") => {
+    const isHorizontal = direction === "LR";
+    dagreGraph.setGraph({ rankdir: direction });
+
+    nodes.forEach((node) => {
+      dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
+    });
+
+    edges.forEach((edge) => {
+      dagreGraph.setEdge(edge.source, edge.target);
+    });
+
+    dagre.layout(dagreGraph);
+
+    nodes.forEach((node) => {
+      const nodeWithPosition = dagreGraph.node(node.id);
+      node.targetPosition = isHorizontal ? "left" : "top";
+      node.sourcePosition = isHorizontal ? "right" : "bottom";
+
+      // We are shifting the dagre node position (anchor=center center) to the top left
+      // so it matches the React Flow node anchor point (top left).
+      node.position = {
+        x: nodeWithPosition.x - nodeWidth / 2,
+        y: nodeWithPosition.y - nodeHeight / 2,
+      };
+
+      return node;
+    });
+
+    return { nodes, edges };
+  };
+
+  const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+    newNodes,
+    newEdges
+  );
+
+  const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
+
+  const onConnect = useCallback(
+    (params) =>
+      setEdges((eds) =>
+        addEdge(
+          { ...params, type: ConnectionLineType.SmoothStep, animated: true },
+          eds
+        )
+      ),
+    []
+  );
+  const onLayout = useCallback(
+    (direction) => {
+      const { nodes: layoutedNodes, edges: layoutedEdges } =
+        getLayoutedElements(nodes, edges, direction);
+
+      setNodes([...layoutedNodes]);
+      setEdges([...layoutedEdges]);
+    },
+    [nodes, edges]
+  );
+
+  useEffect(() => {
+    if (layout) {
+      onLayout(layout);
+      console.log("called ", layout);
+    }
+  }, [layout]);
 
   return (
-    <div style={{ height: `100vh` , width: `100vw`}}>
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      onInit={onInit}
-      fitView
-      attributionPosition="center"
-
+    <div
+      style={{ width: "100vw", color:"red", height: "100vh" }}
+      className="layoutflow"
     >
-      <MiniMap
-        nodeStrokeColor={(n) => {
-          if (n.style?.background) return n.style.background;
-          if (n.type === 'input') return '#0041d0';
-          if (n.type === 'output') return '#ff0072';
-          if (n.type === 'default') return '#1a192b';
-
-          return '#eee';
-        }}
-        nodeColor={(n) => {
-          if (n.style?.background) return n.style.background;
-
-          return '#fff';
-        }}
-        nodeBorderRadius={2}
-      />
-      <Controls />
-      <Background color="#aaa" gap={16} />
-    </ReactFlow>
+      <div style={{ width: "100%", height: "100%" }}>
+        <ReactFlowProvider>
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            connectionLineType={ConnectionLineType.SmoothStep}
+            fitView
+          />
+          <Controls />
+          <Background style={{ background: "#011627" }} color="red" />
+        </ReactFlowProvider>
+      </div>
     </div>
   );
 };
 
-export default OverviewFlow;
+export default LayoutFlow;

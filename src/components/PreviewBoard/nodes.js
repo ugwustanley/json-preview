@@ -7,6 +7,18 @@ class Nodes {
     this.edgeType = "default";
     this.animated = false;
   }
+ 
+  getValueStyle(value) {
+    if (typeof value === "string") {
+      return { color: "#fff", padding: 0, margin: 0 };
+    }
+    if (typeof value === "number") {
+      return { color: "tomato", padding: 0, margin: 0 };
+    }
+    if (typeof value === "boolean") {
+      return { color: "yellow", padding: 0, margin: 0 };
+    }
+  }
   getNodes(input = this.json, parentID = "11", name = "Root") {
     if (parentID === "11") {
       this.nodes.push({
@@ -16,9 +28,10 @@ class Nodes {
             <div style={{ padding: ".7rem 0" }}>
               <b
                 style={{
-                  background: "#5C4599",
+                  background: "#122d42cb",
                   padding: ".7rem .5rem",
                   marginRight: "1rem",
+                  color: "#fff",
                 }}
               >{`./`}</b>
               <i style={{ padding: ".7rem 0" }}>Root</i>
@@ -27,11 +40,11 @@ class Nodes {
         },
         position: this.position,
         style: {
-          background: "#011627",
-          fontSize: ".8rem", 
+          background: "#122d424f",
+          fontSize: ".95rem",
           textAlign: "left",
           color: "teal",
-          border: "1px solid #5C4599",
+          border: "2px solid #122d42cb",
           minWidth: 220,
           padding: 0,
           textOverflow: "ellipsis !important",
@@ -41,11 +54,10 @@ class Nodes {
       });
     }
     if (typeof input === "object" && !Array.isArray(input)) {
+      let valueArray = [];
       Object.keys(input).map((key, index) => {
         if (typeof input[key] === "object" || Array.isArray(input[key])) {
-          const id = `${parentID + 1}${index + 1} ${
-            Math.random() * 10000
-          }`;
+          const id = `${parentID + 1}${index + 1} ${Math.random() * 10000}`;
 
           this.nodes.push({
             id,
@@ -54,9 +66,10 @@ class Nodes {
                 <div style={{ padding: ".7rem 0" }}>
                   <b
                     style={{
-                      background: "#5C4599",
+                      background: "#122d42cb",
                       padding: ".7rem .5rem",
                       marginRight: "1rem",
+                      color: "#fff",
                     }}
                   >
                     {Array.isArray(input[key]) ? `[]` : `{}`}
@@ -79,11 +92,11 @@ class Nodes {
             },
             position: this.position,
             style: {
-              background: "#011627",
-              fontSize: ".8rem",
+              background: "#122d424f",
+              fontSize: ".95rem",
               textAlign: "left",
               color: "teal",
-              border: "1px solid #5C4599",
+              border: "2px solid #122d42cb",
               minWidth: 280,
               padding: 0,
               textOverflow: "ellipsis",
@@ -102,141 +115,104 @@ class Nodes {
 
           this.getNodes(input[key], id, key);
         } else {
-          const id = `${parentID + 1}${index + 1} ${
-            Math.random() * 10000
-          }`;
+          valueArray.push({ key: key, value: input[key] });
+        }
+      });
 
-          this.nodes.push({
-            id,
-            data: {
-              label: (
-                <div style={{ padding: ".7rem 0" }}>
-                  <b
-                    style={{
-                      background: "#5C4599",
-                      padding: ".7rem .5rem",
-                      marginRight: "1rem",
-                    }}
-                  >{`<>`}</b>
+      if (valueArray.length > 0) {
+        const id = `${Math.random() & 1000000}${Math.random() * 100000}`;
 
-                  <span
+        this.nodes.push({
+          id,
+          data: {
+            label: (
+              <div style={{ padding: ".7rem" }}>
+                {valueArray.map((value) => (
+                  <p
                     style={{
-                      width: "210px",
+                      width: "100%",
                       textOverflow: "ellipsis",
                       overflow: "hidden",
                       whiteSpace: "nowrap",
                       display: "inline-block",
                       lineHeight: "1",
+                      margin: 0,
+                      marginTop: ".2rem",
                     }}
                   >
-                    <i style={{ padding: ".7rem 0" }}>{key}: </i>
+                    <b style={{ fontWeight: "bold" }}>{value.key}: </b>
                     <i
-                      style={
-                        typeof input[key] === "number"
-                          ? { color: "tomato" }
-                          : { color: "yellow" }
-                      }
-                    >
-                      {`${input[key]}`}
-                    </i>
-                  </span>
-                </div>
-              ),
-            },
-            position: this.position,
-            style: {
-              background: "#011627",
-              fontSize: ".8rem",
-              fontFamily: " 'Noto Sans Mono', monospace",
-              textAlign: "left",
-              color: "teal",
-              border: "1px solid #5C4599",
-              width: 280,
-              padding: 0,
-            },
-          });
+                      style={this.getValueStyle(value?.value)}
+                    >{`${value?.value}`}</i>
+                  </p>
+                ))}
+              </div>
+            ),
+          },
+          position: this.position,
+          style: {
+            background: "#122d424f",
+            fontSize: ".95rem",
+            fontFamily: " 'Noto Sans Mono', monospace",
+            textAlign: "left",
+            color: "teal",
+            border: "2px solid #122d42cb",
+            width: 280,
+            padding: 0,
+          },
+        });
 
-          this.edges.push({
-            id: id + parentID,
-            source: parentID,
-            target: id,
-            type: this.edgeType,
-            animated: this.animated,
-          });
-        }
-      });
+        this.edges.push({
+          id: id + parentID,
+          source: parentID,
+          target: id,
+          type: this.edgeType,
+          animated: this.animated,
+        });
+      }
     }
 
     if (Array.isArray(input)) {
       input.map((item, index) => {
         if (typeof item === "object" || Array.isArray(item)) {
-          const id = `${parentID + 1}${index + 1} ${
-            Math.random() * 10000
-          }`;
-
-          //   this.nodes.push({
-          //     id,
-          //     data: { label: "none" },
-          //     position: this.position,
-          //   });
-
-          //   this.edges.push({
-          //     id: id + parentID,
-          //     source: parentID,
-          //     target: id,
-          //     type: this.edgeType,
-          //     animated: this.animated,
-          //   });
+          const id = `${parentID + 1}${index + 1} ${Math.random() * 10000}`;
 
           this.getNodes(item, parentID);
         } else {
-          const id = `${parentID + 1}${index + 1} ${
-            Math.random() * 10000
-          }`;
-
-          //   this.nodes.push({
-          //     id,
-          //     data: { label: item },
-          //     position: this.position,
-          //   });
+          const id = `${parentID + 1}${index + 1} ${Math.random() * 10000}`;
 
           this.nodes.push({
             id,
             data: {
               label: (
-                <div style={{ padding: ".7rem 0" }}>
-                  <b
-                    style={{
-                      background: "#5C4599",
-                      padding: ".7rem .5rem",
-                      marginRight: "1rem",
-                    }}
-                  >{`<>`}</b>
-                  <i
+                <div style={{ padding: ".7rem 1rem" }}>
+                  <p
                     style={{
                       //   padding: ".7rem 0",
                       color: "yellow",
-                      width: "210px",
+                      width: "100%",
                       textOverflow: "ellipsis",
                       overflow: "hidden",
                       whiteSpace: "nowrap",
                       display: "inline-block",
                       lineHeight: "1",
+                      textAlign: "center",
+                      margin: "auto",
                     }}
                   >
                     {item}
-                  </i>
+                  </p>
                 </div>
               ),
             },
             position: this.position,
             style: {
-              background: "#011627",
-              fontSize: ".8rem",
+              background: "#122d424f",
+              fontSize: ".95rem",
               fontFamily: "'Noto Sans Mono', monospace",
               textAlign: "left",
               color: "teal",
-              border: "1px solid #5C4599",
+              border: "2px solid #122d42cb",
               width: 280,
               padding: 0,
             },
@@ -257,31 +233,6 @@ class Nodes {
   }
 }
 
-const objectValue = {
-  name: "json preview",
- 
-//   version: ["1.0.1", "1.0.2", "1.0.3", "1.0.4", "1.0.5", "1.0.6", "1.0.7"],
-  example: {
-    1: {
-        name: "peter",
-        age: 18,
-    },
-    2: {
-        name: "james",
-        age: 22,
-    },
-    // 3: {
-    //     name: "john",
-    //     age: 24,
-    //     passed: false
-    // }
-  },
-  //keywords: ["Preview JSON/Object",  "Visualize JSON/Object",  "View JSON file"],
-};
-
-
 export default Nodes;
-
-
 
 //export default Nodes;

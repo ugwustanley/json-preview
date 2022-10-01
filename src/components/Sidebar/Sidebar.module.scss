@@ -10,7 +10,22 @@
    align-items: center;
    flex-direction: column;
     &__top{
-
+        width: fit-content;
+        height: fit-content;
+        display: flex;
+        align-self: baseline;
+        justify-content: center;
+        flex-direction: column;
+        margin:0 auto;
+        margin-top: 2rem;
+        
+        & *{
+          margin-bottom: 0.7rem;
+        }
+        img{
+          width: 25px;
+          cursor: pointer;
+        }
     }
     &__bottom{
       width: fit-content;
@@ -23,7 +38,11 @@
       margin-bottom: 2rem;
       
       & *{
-        margin-top: 0.4rem;
+        margin-top: 0.7rem;
+      }
+      img{
+        width: 20px;
+        cursor: pointer;
       }
     }
 }

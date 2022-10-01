@@ -12,12 +12,22 @@
         margin-top: .3rem;
         margin-right: 1rem;
         display: flex;
+        align-items: center;
         & *{
-            margin-right: .7rem;
+            margin-right: .3rem;
             cursor: pointer;
             &:hover{
                 background: #011627bb;
             }
+            &:last-child{
+               img{
+                width: 20px;
+               }
+            }
+        }
+        img{
+            width: 27px;
+           
         }
     }
 }

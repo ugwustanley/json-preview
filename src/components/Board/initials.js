@@ -1,115 +1,238 @@
-import React from 'react';
-import { MarkerType } from 'reactflow';
+class Nodes {
+  constructor(json) {
+    this.json = json;
+    this.position = { x: 0, y: 0 };
+    this.nodes = [];
+    this.edges = [];
+    this.edgeType = "default";
+    this.animated = false;
+  }
+ 
+  getValueStyle(value) {
+    if (typeof value === "string") {
+      return { color: "#fff", padding: 0, margin: 0 };
+    }
+    if (typeof value === "number") {
+      return { color: "tomato", padding: 0, margin: 0 };
+    }
+    if (typeof value === "boolean") {
+      return { color: "yellow", padding: 0, margin: 0 };
+    }
+  }
+  getNodes(input = this.json, parentID = "11", name = "Root") {
+    if (parentID === "11") {
+      this.nodes.push({
+        id: "11",
+        data: {
+          label: (
+            <div style={{ padding: ".7rem 0" }}>
+              <b
+                style={{
+                  background: "#122d42cb",
+                  padding: ".7rem .5rem",
+                  marginRight: "1rem",
+                  color: "#fff",
+                }}
+              >{`./`}</b>
+              <i style={{ padding: ".7rem 0" }}>Root</i>
+            </div>
+          ),
+        },
+        position: this.position,
+        style: {
+          background: "#122d424f",
+          fontSize: ".95rem",
+          textAlign: "left",
+          color: "teal",
+          border: "2px solid #122d42cb",
+          minWidth: 220,
+          padding: 0,
+          textOverflow: "ellipsis !important",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+        },
+      });
+    }
+    if (typeof input === "object" && !Array.isArray(input)) {
+      let valueArray = [];
+      Object.keys(input).map((key, index) => {
+        if (typeof input[key] === "object" || Array.isArray(input[key])) {
+          const id = `${parentID + 1}${index + 1} ${Math.random() * 10000}`;
 
-export const nodes = [
-  {
-    id: '1',
-    type: 'input',
-    data: {
-      label: (
-        <>
-          Welcome to <strong>React Flow!</strong>
-        </>
-      ),
-    },
-    position: { x: 250, y: 0 },
-  },
-  {
-    id: '2',
-    data: {
-      label: (
-        <>
-          This is a <strong>default node</strong>
-        </>
-      ),
-    },
-    position: { x: 100, y: 100 },
-  },
-  {
-    id: '3',
-    data: {
-      label: (
-        <>
-          This one has a <strong>custom style</strong>
-        </>
-      ),
-    },
-    position: { x: 400, y: 100 },
-    style: {
-      background: '#D6D5E6',
-      color: '#333',
-      border: '1px solid #222138',
-      width: 180,
-    },
-  },
-  {
-    id: '4',
-    position: { x: 250, y: 200 },
-    data: {
-      label: 'Another default node',
-    },
-  },
-  {
-    id: '5',
-    data: {
-      label: 'Node id: 5',
-    },
-    position: { x: 250, y: 1000 },
-  },
-  {
-    id: '6',
-    type: 'output',
-    data: {
-      label: (
-        <>
-          An <strong>output node</strong>
-        </>
-      ),
-    },
-    position: { x: 100, y: 480 },
-  },
-  {
-    id: '7',
-    type: 'output',
-    data: { label: 'Another output node' },
-    position: { x: 400, y: 450 },
-  },
-];
+          this.nodes.push({
+            id,
+            data: {
+              label: (
+                <div style={{ padding: ".7rem 0" }}>
+                  <b
+                    style={{
+                      background: "#122d42cb",
+                      padding: ".7rem .5rem",
+                      marginRight: "1rem",
+                      color: "#fff",
+                    }}
+                  >
+                    {Array.isArray(input[key]) ? `[]` : `{}`}
+                  </b>
+                  <i
+                    style={{
+                      //   padding: ".7rem 0",
+                      width: "210px",
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                      display: "inline-block",
+                      lineHeight: "1",
+                    }}
+                  >
+                    {key}
+                  </i>
+                </div>
+              ),
+            },
+            position: this.position,
+            style: {
+              background: "#122d424f",
+              fontSize: ".95rem",
+              textAlign: "left",
+              color: "teal",
+              border: "2px solid #122d42cb",
+              minWidth: 280,
+              padding: 0,
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+            },
+          });
 
-export const edges = [
-  { id: 'e1-2', source: '1', target: '2', label: 'this is an edge label' },
-  { id: 'e1-3', source: '1', target: '3' },
-  {
-    id: 'e3-4',
-    source: '3',
-    target: '4',
-    animated: true,
-    label: 'animated edge',
-  },
-  {
-    id: 'e4-5',
-    source: '4',
-    target: '5',
-    label: 'edge with arrow head',
-    markerEnd: {
-      type: MarkerType.ArrowClosed,
-    },
-  },
-  {
-    id: 'e5-6',
-    source: '5',
-    target: '6',
-    type: 'smoothstep',
-    label: 'smooth step edge',
-  },
-  {
-    id: 'e5-7',
-    source: '5',
-    target: '7',
-    type: 'step',
-    style: { stroke: '#f6ab6c' },
-    label: 'a step edge',
-    animated: true,
-    labelStyle: { fill: '#f6ab6c', fontWeight: 700 },
-  },
-];
+          this.edges.push({
+            id: id + parentID,
+            source: parentID,
+            target: id,
+            type: this.edgeType,
+            animated: this.animated,
+          });
+
+          this.getNodes(input[key], id, key);
+        } else {
+          valueArray.push({ key: key, value: input[key] });
+        }
+      });
+
+      if (valueArray.length > 0) {
+        const id = `${Math.random() & 1000000}${Math.random() * 100000}`;
+
+        this.nodes.push({
+          id,
+          data: {
+            label: (
+              <div style={{ padding: ".7rem" }}>
+                {valueArray.map((value) => (
+                  <p
+                    style={{
+                      width: "100%",
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                      display: "inline-block",
+                      lineHeight: "1",
+                      margin: 0,
+                      marginTop: ".2rem",
+                    }}
+                  >
+                    <b style={{ fontWeight: "bold" }}>{value.key}: </b>
+                    <i
+                      style={this.getValueStyle(value?.value)}
+                    >{`${value?.value}`}</i>
+                  </p>
+                ))}
+              </div>
+            ),
+          },
+          position: this.position,
+          style: {
+            background: "#122d424f",
+            fontSize: ".95rem",
+            fontFamily: " 'Noto Sans Mono', monospace",
+            textAlign: "left",
+            color: "teal",
+            border: "2px solid #122d42cb",
+            width: 280,
+            padding: 0,
+          },
+        });
+
+        this.edges.push({
+          id: id + parentID,
+          source: parentID,
+          target: id,
+          type: this.edgeType,
+          animated: this.animated,
+        });
+      }
+    }
+
+    if (Array.isArray(input)) {
+      input.map((item, index) => {
+        if (typeof item === "object" || Array.isArray(item)) {
+          const id = `${parentID + 1}${index + 1} ${Math.random() * 10000}`;
+
+          this.getNodes(item, parentID);
+        } else {
+          const id = `${parentID + 1}${index + 1} ${Math.random() * 10000}`;
+
+          this.nodes.push({
+            id,
+            data: {
+              label: (
+                <div style={{ padding: ".7rem 1rem" }}>
+                  <p
+                    style={{
+                      //   padding: ".7rem 0",
+                      color: "yellow",
+                      width: "100%",
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                      display: "inline-block",
+                      lineHeight: "1",
+                      textAlign: "center",
+                      margin: "auto",
+                    }}
+                  >
+                    {item}
+                  </p>
+                </div>
+              ),
+            },
+            position: this.position,
+            style: {
+              background: "#122d424f",
+              fontSize: ".95rem",
+              fontFamily: "'Noto Sans Mono', monospace",
+              textAlign: "left",
+              color: "teal",
+              border: "2px solid #122d42cb",
+              width: 280,
+              padding: 0,
+            },
+          });
+
+          this.edges.push({
+            id: id + parentID,
+            source: parentID,
+            target: id,
+            type: this.edgeType,
+            animated: this.animated,
+          });
+        }
+      });
+    }
+
+    return [this.nodes, this.edges];
+  }
+}
+
+export default Nodes;
+
+//export default Nodes;

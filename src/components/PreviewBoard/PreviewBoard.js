@@ -25,7 +25,9 @@ const LayoutFlow = ({ layout, code }) => {
   const nodeWidth = 272;
   const nodeHeight = 76;
 
-  const getLayoutedElements = (nodes, edges, direction = "LR") => {
+  
+
+  const getLayoutedElements = (nodes, edges, direction = "TB") => {
     const isHorizontal = direction === "LR";
     dagreGraph.setGraph({ rankdir: direction });
 
@@ -50,6 +52,8 @@ const LayoutFlow = ({ layout, code }) => {
         x: nodeWithPosition.x - nodeWidth / 2,
         y: nodeWithPosition.y - nodeHeight / 2,
       };
+
+      
 
       return node;
     });
@@ -86,16 +90,19 @@ const LayoutFlow = ({ layout, code }) => {
     [nodes, edges]
   );
 
+  
+
   useEffect(() => {
     if (layout) {
       onLayout(layout);
       console.log("called ", layout);
     }
+    
   }, [layout]);
 
   return (
     <div
-      style={{ width: "100%", height: "calc(100% - 20px)" }}
+      style={{ width: "100%", height: "calc(100% - 30px)" }}
       className="layoutflow"
     >
       <div style={{ width: "100%", height: "100%" }}>
