@@ -38,6 +38,9 @@
     font-size: 0.8rem;
     cursor: pointer;
     color: #549efc;
+    @media (max-width: 480px){
+        width: calc(50% - 20px);
+    }
     &__active {
       // background: #020d18;
       background: #0b2942;

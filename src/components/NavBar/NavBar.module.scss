@@ -21,8 +21,14 @@
         margin-right: 2rem;
         display: flex;
         align-items: center;
+        @media (max-width: 480px){
+            margin-right: 1rem;
+        }
         & *{
             margin-left: .7rem;
+            @media (max-width: 480px){
+                margin-left: .4rem;
+            }
             cursor: pointer;
             &:hover{
                 background: #011627bb;
@@ -30,6 +36,7 @@
             &:last-child{
                img{
                 width: 21px;
+                margin-bottom: .2rem;
                }
             }
         }
