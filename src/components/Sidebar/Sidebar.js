@@ -7,11 +7,11 @@ import StarIcon from '../../assets/icons/icons8-star-50.png'
 import ClearIcon from '../../assets/icons/icons8-clear-64.png'
 import styles from "./Sidebar.module.scss";
 
-const Sidebar = () => {
+const Sidebar = ({setCode}) => {
   return (
     <div className={styles.sidebar}>
       <div className={styles.sidebar__top}>
-      <div>
+      <div onClick={() => setCode(`{}`)}>
           <img src={ClearIcon}  alt="clear icon"/>
         </div>
       </div>

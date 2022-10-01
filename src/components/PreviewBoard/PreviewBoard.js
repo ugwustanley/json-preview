@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, forwardRef , useEffect } from "react";
 import ReactFlow, {
   addEdge,
   ConnectionLineType,
@@ -14,7 +14,7 @@ import Nodes from "./nodes";
 
 import "./index.css";
 
-const LayoutFlow = ({ layout, code }) => {
+const LayoutFlow = forwardRef(({ layout, code }, ref) => {
   const nodeInstance = new Nodes(typeof code === "string" ? JSON.parse(code) : {});
 
   const [newNodes, newEdges] = nodeInstance.getNodes();
@@ -102,6 +102,7 @@ const LayoutFlow = ({ layout, code }) => {
 
   return (
     <div
+    ref={ref}
       style={{ width: "100%", height: "calc(100% - 30px)" }}
       className="layoutflow"
     >
@@ -117,11 +118,11 @@ const LayoutFlow = ({ layout, code }) => {
             fitView
           />
           <Controls />
-          <Background style={{ background: "#011627" }} color="red" />
+          <Background style={{ background: "#011627" }} color="#f97448" />
         </ReactFlowProvider>
       </div>
     </div>
   );
-};
+});
 
 export default LayoutFlow;

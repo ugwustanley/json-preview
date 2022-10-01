@@ -8,25 +8,33 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    &__right{
+        
+        margin-left: -.7rem;
+        
+        img{
+            height: 180px;
+        }
+    }
     &__left{
         margin-top: .3rem;
-        margin-right: 1rem;
+        margin-right: 2rem;
         display: flex;
         align-items: center;
         & *{
-            margin-right: .3rem;
+            margin-left: .7rem;
             cursor: pointer;
             &:hover{
                 background: #011627bb;
             }
             &:last-child{
                img{
-                width: 20px;
+                width: 21px;
                }
             }
         }
         img{
-            width: 27px;
+            width: 20px;
            
         }
     }

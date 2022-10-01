@@ -7,6 +7,7 @@ import View from '../components/View/View'
 const Layout = ({children}) => {
 
  const [layout , setLayout] = useState("LR")
+ const [downloadCount , setDownloadCount] = useState(0)
  const [code , setCode] = useState(`
  {
     "name": "json-preview",
@@ -26,7 +27,7 @@ const Layout = ({children}) => {
       ]
     },
     "browserslist": {
-        
+
       "production": [
         ">0.2%",
         "not dead",
@@ -42,14 +43,14 @@ const Layout = ({children}) => {
     <div className={styles.layout}>
 
         <div className={styles.layout__navbar}>
-            <NavBar setLayout={setLayout} />
+            <NavBar setDownloadCount={setDownloadCount} downloadCount={downloadCount} setLayout={setLayout} layout={layout} />
         </div>
         <div className={styles.layout__main}>
             <div className={styles.layout__sidebar}>
-                <Sidebar />
+                <Sidebar setCode={setCode}  />
             </div>
             <div className={styles.layout__body}>
-                <View code={code} setCode={setCode} layout={layout} />
+                <View downloadCount={downloadCount} code={code} setCode={setCode} layout={layout} />
             </div>
         </div>
 

@@ -189,7 +189,7 @@ class Nodes {
                   <p
                     style={{
                       //   padding: ".7rem 0",
-                      color: "yellow",
+                      color: "#f97448",
                       width: "100%",
                       textOverflow: "ellipsis",
                       overflow: "hidden",
