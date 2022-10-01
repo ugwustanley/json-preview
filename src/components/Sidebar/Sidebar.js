@@ -16,18 +16,18 @@ const Sidebar = ({setCode}) => {
         </div>
       </div>
       <div className={styles.sidebar__bottom}>
-      <div>
+      <a target="_blank" href="https://www.linkedin.com/in/stanley-ugwu-2157601a7/">
           <img src={LinkedinIcon}  alt="linkedin icon"/>
-        </div>
-        <div>
+        </a>
+        <a target="_blank" href="https://twitter.com/chiagozie_ugwu">
           <img src={TwitterIcon}  alt="twitter icon"/>
-        </div>
-        <div>
+        </a>
+        <a target="_blank" href="https://github.com/ugwustanley/json-preview">
           <img src={GithubIcon} alt="github icon" />
-        </div>
-        <div>
+        </a>
+        <a target="_blank" href="https://github.com/ugwustanley/json-preview/stargazers">
           <img src={StarIcon}  alt="star icon"/>
-        </div>
+        </a>
       </div>
     </div>
   );
