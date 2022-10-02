@@ -1,70 +1,114 @@
-# Getting Started with Create React App
+<div align="center">
+ <img width="100px" src="https://raw.githubusercontent.com/frankiefab100/json-preview/main/public/logo.png" alt="json-preview logo" />
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ <h1>JSON Preview</h1>
+ <p>Convert JSON files to downloadable diagrams</p>
+</div>
 
-## Available Scripts
+<div align="center">
+<a href="https://github.com/ugwustanley/json-preview/issues?q=is%3Aopen+is%3Aissue">
+<img src="https://img.shields.io/github/issues-raw/ugwustanley/json-preview?color=green">
+</a>
 
-In the project directory, you can run:
+<a href="https://github.com/ugwustanley/json-preview/issues">
+<img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat">
+</a>
+<img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=flat">
+</a>
+</div>
 
-### `npm start`
+## Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+A  web application which allows a user to easily visualize any JSON file and generate diagrams from it.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+Live Preview: <https://json-preview.vercel.app>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Tools and Packages Used
 
-### `npm run build`
+- React
+- prismjs
+- react-component-export-image
+- react-simple-code-editor
+- reactflow
+- sass
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Tabs
+- Preview Board
+- Code editor
+- Zoom In/out
+- Focus control
+- Lock
+- Download Button
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Why I started this project
 
-### `npm run eject`
+I came across a code editor that helps you visualize JSON file, so I thought about build something similar as a web app with additional features.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+I had a challenges with generating the diagram, but `Reactflow` gave me insight on how to connect the different nodes and edges together. 
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## How It Works
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Users can easily interact with the code editor and type in JSON structured code.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The code editor has a *debugging feature* - red indicator that shows error exist in the code. Thus, It can't be previewed until it is fixed.
 
-## Learn More
+At the bottom-left, it has features which allows:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Zoom in or out** from the workspace.
+- **Fit to view** for easy switching on the vertical or horizontal direction.
+- **Lock** to restrict the diagram generated from further edit or distortion.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+At the top-right, there is:
 
-### Code Splitting
+- **Download** to the diagrams
+- **Orientation adjustment** button for custom view.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+The left side menu consists of:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **Eraser** to delete the contents in the code editor.
+- **Social media handles** (Linkedin, Twitter)
+- **Github repository**
 
-### Making a Progressive Web App
+## Installation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Clone the repository
 
-### Advanced Configuration
+```bash
+git clone https://github.com/ugwustanley/json-preview.git
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+2. Change the working directory
 
-### Deployment
+```bash
+cd json-preview
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+3. Install dependencies
 
-### `npm run build` fails to minify
+```bash
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+4. Run the app
+
+```bash
+npm start
+```
+
+You can now see it at `http://localhost:3000` in your browser.
+
+## Contributing
+
+If you face any problems while using the application, please open an issue or submit a pull request.
+
+## Support
+
+Please give this project a star⭐, if you like it.
+
+## License
+
+This project is built under the [MIT License](./License).
