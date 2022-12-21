@@ -16,7 +16,7 @@ const Sidebar = ({setCode}) => {
         </div>
       </div>
       <div className={styles.sidebar__bottom}>
-      <a target="_blank" href="https://www.linkedin.com/in/stanley-ugwu-2157601a7/">
+      <a target="_blank" href="https://www.linkedin.com/in/ugwustanley/">
           <img src={LinkedinIcon}  alt="linkedin icon"/>
         </a>
         <a target="_blank" href="https://twitter.com/chiagozie_ugwu">
